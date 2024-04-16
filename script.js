@@ -44,7 +44,46 @@ async function animateBubbleSort(array, barElements) {
     }
 }
 
-// Event listener to generate bars when content is loaded.
+async function animateQuickSort(array, barElements) {
+    async function splitArray(start, end) {
+        let ref_point = array[end]; // chose the reference point (last element)
+        let i = start - 1; // index of the smaller element
+
+        for (let j = start; j < end; j++) { // loop through the sub array
+            if (array[j] < ref_point) { // check if current element is the smaller element
+                i++; // increment index of smaller element
+                [array[i], array[j]] = [array[j], array[i]]; // swap array elements
+
+                // Swap bar height visually
+                [barElements[i].style.height, barElements[j].style.height] =
+                    [barElements[j].style.height, barElements[i].style.height];
+            }
+        }
+
+        
+        [array[i + 1], array[end]] = [array[end], array[i + 1]]; // move reference point to its correct position
+        
+        // visually move the reference point 
+        [barElements[i + 1].style.height, barElements[end].style.height] =
+            [barElements[end].style.height, barElements[i + 1].style.height];
+
+        return i + 1; // return index of the ref point
+    }
+
+    async function quickSort(start, end) {
+        if (start >= end) return; // check if start index is >= the end index.
+        // split the array and sort the segments
+        let index = await splitArray(start, end);
+        await quickSort(start, index - 1); // Sort the left segment
+        await quickSort(index + 1, end); // sort the right segment
+    }
+
+    // Call quickSort initially with the whole array range
+    await quickSort(0, array.length - 1);
+}
+
+
+// Event listeners to generate bars when content is loaded and buttons are clicked
 window.addEventListener('DOMContentLoaded', () => {
     const numBars = 50; // number of bars to generate
     generateBars(numBars);
@@ -54,6 +93,12 @@ document.getElementById("animateBubbleSortBtn").addEventListener("click", async 
     const numBars = 50;
     const { array, barElements } = generateBars(numBars); // Generate bars
     await animateBubbleSort(array, barElements); // Call animateBubbleSort with the generated array and bar elements
+});
+
+document.getElementById("animateQuickSortBtn").addEventListener("click", async () => {
+    const numBars = 50;
+    const { array, barElements } = generateBars(numBars); // Generate bars
+    await animateQuickSort(array, barElements); // Call animateQuickSort with the generated array and bar elements
 });
 
 
