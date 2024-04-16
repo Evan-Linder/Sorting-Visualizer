@@ -27,10 +27,13 @@ function generateBars(numBars) {
 async function animateBubbleSort(array, barElements) {
     for(let i = 0; i < array.length - 1; i++) { // loop through the array excluding the last element.
         for (let j = 0; j < array.length - i - 1; j++) { // loop through unsorted array
-
             
             if (array[j] > array[j + 1]) { // compare elements next to eachother 
-                [array[j], array[j+1]] = [array[j+1], array[j]]; // swap array elements accordingly
+                [array[j], array[j +1]] = [array[j + 1], array[j]]; // swap array elements accordingly
+
+                // swap bar height visually
+                [barElements[j].style.height, barElements[j+1].style.height] = 
+                    [barElements[j+1].style.height, barElements[j].style.height]; 
             
             }
         }
