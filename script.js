@@ -27,6 +27,10 @@ function generateBars(numBars) {
 async function animateBubbleSort(array, barElements) {
     for(let i = 0; i < array.length - 1; i++) { // loop through the array excluding the last element.
         for (let j = 0; j < array.length - i - 1; j++) { // loop through unsorted array
+
+            barElements[j].style.backgroundColor = "red"; // highlight the current element being compared
+            barElements[j+1].style.backgroundCOlor = "red" // highlight the 2nd element being compared
+            await new Promise(resolve => setTimeout(resolve, 10)); // delay for visualization
             
             if (array[j] > array[j + 1]) { // compare elements next to eachother 
                 [array[j], array[j +1]] = [array[j + 1], array[j]]; // swap array elements accordingly
