@@ -65,11 +65,9 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
+    width: 10px;
     height: 40px;
     background-color: white;
-    color: white;
-    font-size: 20px;
     margin-right: 5px;
     border-radius: 5px; 
 }

@@ -1,12 +1,12 @@
 // get the container element where bars will be displayed
-const boxContainer = document.getElementById("barContainer");
+const barContainer = document.getElementById("barContainer");
 
 function generateBars(numBars) {
     const array = []; // array to store the random numbers
-    const boxElements = []; // array to store the bar elements
+    const barElements = []; // array to store the bar elements
 
     // clear previous bars from the container
-    boxContainer.innerHTML = "";
+    barContainer.innerHTML = "";
 
    
     for (let i = 0; i < numBars; i++) {
@@ -17,17 +17,36 @@ function generateBars(numBars) {
         const bar = document.createElement("div"); // create a new bar element
         bar.classList.add("bar"); // add bar class to the element
         bar.style.height = `${randomNumber * 5}px`; // Set the height of the bar
-        boxElements.push(bar); // Add bar element to the array
-        boxContainer.appendChild(bar); // Append bar element to the container
+        barElements.push(bar); // Add bar element to the array
+        barContainer.appendChild(bar); // Append bar element to the container
     }
 
-    return { array, boxElements }; // return both the arrays
+    return { array, barElements }; // return both the arrays
+}
+
+async function animateBubbleSort(array, barElements) {
+    for(let i = 0; i < array.length - 1; i++) { // loop through the array excluding the last element.
+        for (let j = 0; j < array.length - i - 1; j++) { // loop through unsorted array
+
+            
+            if (array[j] > array[j + 1]) { // compare elements next to eachother 
+                [array[j], array[j+1]] = [array[j+1], array[j]]; // swap array elements accordingly
+            
+            }
+        }
+    }
 }
 
 // Event listener to generate bars when content is loaded.
 window.addEventListener('DOMContentLoaded', () => {
-    const numBars = 10; // number of bars to generate
+    const numBars = 50; // number of bars to generate
     generateBars(numBars);
+});
+
+document.getElementById("animateBubbleSortBtn").addEventListener("click", async () => {
+    const numBars = 50;
+    const { array, barElements } = generateBars(numBars); // Generate bars
+    await animateBubbleSort(array, barElements); // Call animateBubbleSort with the generated array and bar elements
 });
 
 
