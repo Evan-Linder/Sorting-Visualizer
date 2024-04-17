@@ -8,12 +8,10 @@ function generateBars(numBars) {
     // clear previous bars from the container
     barContainer.innerHTML = "";
 
-   
     for (let i = 0; i < numBars; i++) {
         const randomNumber = Math.floor(Math.random() * 100) + 1; // random number between 1 and 100
         array.push(randomNumber); // add random number to the array
 
-       
         const bar = document.createElement("div"); // create a new bar element
         bar.classList.add("bar"); // add bar class to the element
         bar.style.height = `${randomNumber * 5}px`; // Set the height of the bar
@@ -30,7 +28,7 @@ async function animateBubbleSort(array, barElements) {
 
             barElements[j].style.backgroundColor = "red"; // highlight the current element being compared
             barElements[j+1].style.backgroundCOlor = "red" // highlight the 2nd element being compared
-            await new Promise(resolve => setTimeout(resolve, 10)); // delay for visualization
+            await new Promise(resolve => setTimeout(resolve, 50)); // delay for visualization
             
             if (array[j] > array[j + 1]) { // compare elements next to eachother 
                 [array[j], array[j +1]] = [array[j + 1], array[j]]; // swap array elements accordingly
@@ -40,33 +38,49 @@ async function animateBubbleSort(array, barElements) {
                     [barElements[j+1].style.height, barElements[j].style.height]; 
             
             }
+
+            // reset bar colors
+            barElements[j].style.backgroundColor = "";
+            barElements[j + 1].style.backgroundColor = "";
         }
     }
 }
 
 async function animateQuickSort(array, barElements) {
+
     async function splitArray(start, end) {
         let ref_point = array[end]; // chose the reference point (last element)
         let i = start - 1; // index of the smaller element
 
         for (let j = start; j < end; j++) { // loop through the sub array
+
+            barElements[j].style.backgroundColor = "#007cb9"; // highlight current element being compared
+            barElements[end].style.backgroundColor= "blue"; // highlight the ref point
+            await new Promise(resolve => setTimeout(resolve, 50));
+
+
             if (array[j] < ref_point) { // check if current element is the smaller element
                 i++; // increment index of smaller element
                 [array[i], array[j]] = [array[j], array[i]]; // swap array elements
 
-                // Swap bar height visually
+                // Swap bars visually
                 [barElements[i].style.height, barElements[j].style.height] =
                     [barElements[j].style.height, barElements[i].style.height];
             }
+
+            // reset bar colors
+            barElements[j].style.backgroundColor = "";
+            barElements[end].style.backgroundColor = "";
         }
 
         
         [array[i + 1], array[end]] = [array[end], array[i + 1]]; // move reference point to its correct position
-        
+
         // visually move the reference point 
         [barElements[i + 1].style.height, barElements[end].style.height] =
             [barElements[end].style.height, barElements[i + 1].style.height];
-
+        await new Promise(resolve => setTimeout(resolve, 50)) 
+        
         return i + 1; // return index of the ref point
     }
 
