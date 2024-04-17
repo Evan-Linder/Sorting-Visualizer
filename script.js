@@ -161,20 +161,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
 document.getElementById("animateBubbleSortBtn").addEventListener("click", async () => {
     const numBars = 50;
-    const { array, barElements } = generateBars(numBars); // Generate bars
-    await animateBubbleSort(array, barElements); // Call animateBubbleSort with the generated array and bar elements
+    await animateSort(animateBubbleSort, numBars)
 });
 
 document.getElementById("animateQuickSortBtn").addEventListener("click", async () => {
     const numBars = 50;
-    const { array, barElements } = generateBars(numBars); // Generate bars
-    await animateQuickSort(array, barElements); // Call animateQuickSort with the generated array and bar elements
+    await animateSort(animateQuickSort, numBars)
 });
 
 document.getElementById("animateMergeSortBtn").addEventListener("click", async () => {
     const numBars = 50;
-    const { array, barElements } = generateBars(numBars); // Generate bars
-    await animateMergeSort(array, barElements); // Call animateQuickSort with the generated array and bar elements
+    await animateSort(animateMergeSort, numBars)
 });
 
 
