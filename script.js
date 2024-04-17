@@ -86,8 +86,7 @@ async function animateQuickSort(array, barElements) {
 
     async function quickSort(start, end) {
         if (start >= end) return; // check if start index is >= the end index.
-        // split the array and sort the segments
-        let index = await splitArray(start, end);
+        let index = await splitArray(start, end); // split the array into 2 segements
         await quickSort(start, index - 1); // Sort the left segment
         await quickSort(index + 1, end); // sort the right segment
     }
@@ -114,6 +113,26 @@ document.getElementById("animateQuickSortBtn").addEventListener("click", async (
     const { array, barElements } = generateBars(numBars); // Generate bars
     await animateQuickSort(array, barElements); // Call animateQuickSort with the generated array and bar elements
 });
+
+async function animateMergeSort(array, barElements) { 
+    
+    async function merge_array(start, middle, end){
+        const tempArray = new Array(end - start + 1); // array to store merged elements
+        let i = start; // set i = to the start of the left sub array
+        let j = middle + 1; // set j = to the middle of the right subarray
+        let k = 0; // set k = index for the temp array
+        
+        
+        while (i  <= middle && j <= end) { // check if i and j are both <= to their boundaries
+            if (array[i] <= array[j]) { // compare
+                tempArray[k++] = array[i++]; // store the smaller element in tempArray
+            } else { //
+                tempArray[k++] = array[j++]; // j is the smaller element so store it in the temp array.
+            }
+        }
+        
+        }
+    }
 
 
 
