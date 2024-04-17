@@ -22,6 +22,11 @@ function generateBars(numBars) {
     return { array, barElements }; // return both the arrays
 }
 
+async function animateSort(sortType, numBars) {
+    const {array, barElements} = generateBars(numBars);
+
+    await sortType(array, barElements);
+}
 
 async function animateBubbleSort(array, barElements) {
     for(let i = 0; i < array.length - 1; i++) { // loop through the array excluding the last element.
@@ -135,7 +140,7 @@ async function animateMergeSort(array, barElements) {
     async function mergeSort(start,end) {
         if (start < end) { // check if start index is less than end index
             const middle = Math.floor((start + end) / 2); // calc middle index
-            await mergeSort(start, mid); // sort the left half 
+            await mergeSort(start, middle); // sort the left half 
             await mergeSort(middle + 1, end); // sort the right half
             await mergeArrays(start, middle, end); // merge the sorted halves
         }
