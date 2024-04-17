@@ -23,9 +23,8 @@ function generateBars(numBars) {
 }
 
 async function animateSort(sortType, numBars) {
-    const {array, barElements} = generateBars(numBars);
-
-    await sortType(array, barElements);
+    const {array, barElements} = generateBars(numBars); // generate bars and retrieve bar and array elements
+    await sortType(array, barElements); // call the user chosen sorting method
 }
 
 async function animateBubbleSort(array, barElements) {
@@ -96,9 +95,7 @@ async function animateQuickSort(array, barElements) {
         await quickSort(start, index - 1); // Sort the left segment
         await quickSort(index + 1, end); // sort the right segment
     }
-
-    // Call quickSort initially with the whole array range
-    await quickSort(0, array.length - 1);
+    await quickSort(0, array.length - 1); // call quickSort with the whole array
 }
 
 async function animateMergeSort(array, barElements) { 
@@ -135,9 +132,7 @@ async function animateMergeSort(array, barElements) {
             await new Promise(resolve => setTimeout(resolve, 20));
             barElements[m].style.height = `${array[m] * 5}px`; // update bar height
             barElements[m].style.backgroundColor = "green";
-
         }
-    
     }
     
 
@@ -156,7 +151,7 @@ async function animateMergeSort(array, barElements) {
 // Event listeners to generate bars when content is loaded and buttons are clicked
 window.addEventListener('DOMContentLoaded', () => {
     const numBars = 50; // number of bars to generate
-    generateBars(numBars);
+    generateBars(numBars); // generate the bars.
 });
 
 document.getElementById("animateBubbleSortBtn").addEventListener("click", async () => {
