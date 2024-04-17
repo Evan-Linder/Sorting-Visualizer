@@ -22,6 +22,7 @@ function generateBars(numBars) {
     return { array, barElements }; // return both the arrays
 }
 
+
 async function animateBubbleSort(array, barElements) {
     for(let i = 0; i < array.length - 1; i++) { // loop through the array excluding the last element.
         for (let j = 0; j < array.length - i - 1; j++) { // loop through unsorted array
@@ -95,6 +96,53 @@ async function animateQuickSort(array, barElements) {
     await quickSort(0, array.length - 1);
 }
 
+async function animateMergeSort(array, barElements) { 
+    
+    async function mergeArrays(start, middle, end){
+        const tempArray = new Array(end - start + 1); // array to store merged elements
+        let i = start; // set i = to the start of the left sub array
+        let j = middle + 1; // set j = to the middle of the right subarray
+        let k = 0; // set k = index for the temp array
+        
+        while (i  <= middle && j <= end) { // check if i and j are both <= to their boundaries
+            if (array[i] <= array[j]) { // compare i <= j
+                tempArray[k++] = array[i++]; // store the smaller element in tempArray
+            } else { //
+                tempArray[k++] = array[j++]; // j is the smaller element so store it in the temp array.
+            }
+        }
+        
+        // copy any remaining elments from half 1
+        while (i <= middle) { 
+            tempArray[k++] = array[i++];
+        }
+    
+        // copy any remaining elements from half 2
+        while (j <= end) {
+            tempArray[k++] = array[j++];
+        }
+    
+        for (let len = 0; len < tempArray.length; len++) { // loop through temp array
+            array[start + len] = tempArray[len];
+        }
+    
+        for (let m = start; m <= end; m++) { // loop through the sorted array
+            barElements[m].style.height = `${array[m] * 5}px`; // update bar height
+        }
+    }
+    
+
+    async function mergeSort(start,end) {
+        if (start < end) { // check if start index is less than end index
+            const middle = Math.floor((start + end) / 2); // calc middle index
+            await mergeSort(start, mid); // sort the left half 
+            await mergeSort(middle + 1, end); // sort the right half
+            await mergeArrays(start, middle, end); // merge the sorted halves
+        }
+    }
+    await mergeSort(0, array.length - 1); // merge sort the halves
+}  
+    
 
 // Event listeners to generate bars when content is loaded and buttons are clicked
 window.addEventListener('DOMContentLoaded', () => {
@@ -114,25 +162,13 @@ document.getElementById("animateQuickSortBtn").addEventListener("click", async (
     await animateQuickSort(array, barElements); // Call animateQuickSort with the generated array and bar elements
 });
 
-async function animateMergeSort(array, barElements) { 
-    
-    async function merge_array(start, middle, end){
-        const tempArray = new Array(end - start + 1); // array to store merged elements
-        let i = start; // set i = to the start of the left sub array
-        let j = middle + 1; // set j = to the middle of the right subarray
-        let k = 0; // set k = index for the temp array
-        
-        
-        while (i  <= middle && j <= end) { // check if i and j are both <= to their boundaries
-            if (array[i] <= array[j]) { // compare
-                tempArray[k++] = array[i++]; // store the smaller element in tempArray
-            } else { //
-                tempArray[k++] = array[j++]; // j is the smaller element so store it in the temp array.
-            }
-        }
-        
-        }
-    }
+document.getElementById("animateMergeSortBtn").addEventListener("click", async () => {
+    const numBars = 50;
+    const { array, barElements } = generateBars(numBars); // Generate bars
+    await animateMergeSort(array, barElements); // Call animateQuickSort with the generated array and bar elements
+});
+
+
 
 
 
