@@ -132,8 +132,12 @@ async function animateMergeSort(array, barElements) {
         }
     
         for (let m = start; m <= end; m++) { // loop through the sorted array
+            await new Promise(resolve => setTimeout(resolve, 20));
             barElements[m].style.height = `${array[m] * 5}px`; // update bar height
+            barElements[m].style.backgroundColor = "green";
+
         }
+    
     }
     
 
