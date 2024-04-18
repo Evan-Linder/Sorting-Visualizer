@@ -72,3 +72,16 @@ button {
     border-radius: 5px; 
 }
 
+#numBarsInput {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 7px;
+    width: 70px;
+}
+
+#speedInput {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
