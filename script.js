@@ -148,6 +148,57 @@ async function animateMergeSort(array, barElements) {
     }
 }
 
+async function animateHeapSort(array, barElements) {
+
+    async function heapify(n, i) {
+        let largest = i; // current node
+        let left = 2 * i + 1; // left child
+        let right = 2 * i + 2; // right child
+
+        if (left < n && array[left] > array[largest]) { // check if left child is larger than parent
+            largest = left;
+        }
+
+        if (right < n && array[right] > array[largest]) { // check if right child is larger than parent
+            largest = right;
+        }
+
+        if (largest !== i) { // check if the largest element is not the parent
+            [array[i], array[largest]] = [array[largest], array[i]]; // swap array elements
+
+            // swap bar height visually 
+            [barElements[i].style.height, barElements[largest].style.height] = 
+                [barElements[largest].style.height, barElements[i].style.height];
+
+            await heapify(n, largest); // heapify the affected subtree
+        }
+    }
+
+    async function heapSort() {
+        const n = array.length; 
+        // Build max heap
+        for (let i = Math.floor(n / 2) - 1; i >= 0; i--) { // loop through each non-leaf node in the heap
+            await heapify(n, i);
+        }
+
+        // Extract elements from heap one by one
+        for (let i = n - 1; i > 0; i--) {
+            [array[0], array[i]] = [array[i], array[0]];
+            
+            // Swap bar height visually
+            [barElements[0].style.height, barElements[i].style.height] = 
+                [barElements[i].style.height, barElements[0].style.height];
+
+            await heapify(i, 0); // Heapify the reduced heap
+        } 
+    }
+
+    await heapSort();
+}
+
+
+
+
 // event listeners
 window.addEventListener('DOMContentLoaded', () => {
     const numBars = 50; // number of bars to generate
@@ -195,4 +246,16 @@ document.getElementById("animateMergeSortBtn").addEventListener("click", async (
         numBars = 100
     }
     await animateSort(animateMergeSort, numBars)
+});
+
+document.getElementById("animateHeapSortBtn").addEventListener("click", async () => {
+    const maxBars = 100; 
+    let numBars = 50; 
+    const inputNumBars = parseInt(document.getElementById("numBarsInput").value);
+    if (inputNumBars <= maxBars) {
+        numBars = inputNumBars;
+    } else {
+        numBars = 100
+    }
+    await animateSort(animateHeapSort, numBars)
 });
