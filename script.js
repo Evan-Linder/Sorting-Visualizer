@@ -155,6 +155,17 @@ async function animateHeapSort(array, barElements) {
         let left = 2 * i + 1; // left child
         let right = 2 * i + 2; // right child
 
+        if (left < n) {
+            barElements[left].style.backgroundColor = "purple";
+            await new Promise(resolve => setTimeout(resolve, delay));
+            barElements[left].style.backgroundColor = "";
+        }
+        if (right < n) {
+            barElements[right].style.backgroundColor = "purple";
+            await new Promise(resolve => setTimeout(resolve, delay));
+            barElements[right].style.backgroundColor = "";
+        }
+
         if (left < n && array[left] > array[largest]) { // check if left child is larger than parent
             largest = left;
         }
@@ -183,6 +194,12 @@ async function animateHeapSort(array, barElements) {
 
         // Extract elements from heap one by one
         for (let i = n - 1; i > 0; i--) {
+
+            // highlight items being compared
+            barElements[0].style.backgroundColor = "purple"; 
+            barElements[i].style.backgroundColor = "purple"; 
+            await new Promise(resolve => setTimeout(resolve, delay));
+
             [array[0], array[i]] = [array[i], array[0]];
             
             // Swap bar height visually
